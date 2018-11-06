@@ -8,6 +8,7 @@ import { FRASES } from './frases-mock';
   templateUrl: './painel.component.html',
   styleUrls: ['./painel.component.css']
 })
+
 export class PainelComponent implements OnInit {
 
   public frases: Frase[] = FRASES
@@ -16,6 +17,9 @@ export class PainelComponent implements OnInit {
 
   public rodada: number = 0
   public rodadaFrase: Frase
+
+  public progresso: number = 0
+
   constructor() {
     this.rodadaFrase = this.frases[this.rodada]
     console.log(this.rodadaFrase)
@@ -25,19 +29,22 @@ export class PainelComponent implements OnInit {
   }
 
   public atualizaResposta(resposta: Event): void {
-    this.resposta = ((<HTMLInputElement>resposta.target).value)
-    console.log(this.resposta)
+    this.resposta = (<HTMLInputElement>resposta.target).value
   }
   public verificarReposta(): void {
 
     if (this.rodadaFrase.frasePtBr == this.resposta) {
       alert('Correto!')
       this.rodada++
+
+      this.progresso = this.progresso + (100 / this.frases.length)
       this.rodadaFrase = this.frases[this.rodada]
-  
+      console.log(this.progresso)
+      
     } else {
       alert('Errado!')
     }
 
+  
   }
 }
